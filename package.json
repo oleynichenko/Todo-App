@@ -1,0 +1,28 @@
+{
+  "name": "todo-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test:lint": "eslint .",
+    "test": "SET \"NODE_ENV=test\" || export NODE_ENV=test && mocha tests/*.test.js",
+    "test-watch": "nodemon --exec \"npm test\""
+  },
+  "engines": {
+    "node":"10.14.1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "1.18.3",
+    "dotenv": "6.2.0",
+    "express": "4.16.4",
+    "jest": "23.6.0",
+    "lodash": "4.17.11",
+    "mocha": "5.2.0",
+    "mongodb": "3.1.10",
+    "mongoose": "5.3.15",
+    "supertest": "3.3.0"
+  }
+}
