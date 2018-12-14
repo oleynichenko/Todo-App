@@ -22,6 +22,26 @@ app.post(`/todos`, (req, res) => {
     });
 });
 
+app.delete(`/todos/:id`, (req, res) => {
+  const id = req.params.id;
+
+  if (!ObjectID.isValid(id)) {
+    res.status(400).send();
+  } else {
+    Todo.findByIdAndRemove(id)
+      .then((todo) => {
+        if (!todo) {
+          res.status(404).send();
+        }
+
+        res.send({todo});
+      })
+      .catch(() => {
+        res.status(500).send();
+      });
+  }
+});
+
 app.get(`/todos`, (req, res) => {
   Todo.find()
     .then((todos) => {

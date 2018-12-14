@@ -1,11 +1,14 @@
 const expect = require(`expect`);
 const request = require(`supertest`);
+const {Types} = require(`mongoose`);
 
 const app = require(`../server`);
 const Todo = require(`../db/todos-model`);
 
+const _id = Types.ObjectId();
+
 const todos = [
-  {text: `First test todo`},
+  {_id, text: `First test todo`},
   {text: `Second test todo`}
 ];
 
@@ -15,6 +18,10 @@ beforeEach((done) => {
       return Todo.insertMany(todos);
     })
     .then(() => done());
+});
+
+after(() => {
+  process.exit(0);
 });
 
 describe(`POST /todos`, () => {
@@ -36,14 +43,7 @@ describe(`POST /todos`, () => {
           Todo.findOne({_id: res.body._id})
             .then((todo) => {
               expect(todo.text).toBe(text);
-
-              todo.delete((e) => {
-                if (e) {
-                  done(e);
-                } else {
-                  done();
-                }
-              });
+              done();
             })
             .catch((error) => done(error));
         }
@@ -80,12 +80,35 @@ describe(`GET /todos`, () => {
   });
 });
 
-describe(`PATCH /todos/:id`, () => {
-  it(`should update the todo`, (done) => {
+describe(`DELETE /todos/:id`, () => {
 
+  it(`should delete the todo`, (done) => {
+    const hexId = _id.toHexString();
+
+    request(app)
+      .delete(`/todos/${hexId}`)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.todo._id).toBe(hexId);
+      })
+      .end((err) => {
+        if (err) {
+          done(err);
+        } else {
+          Todo.findById(hexId)
+            .then((todo) => {
+              expect(todo).toBeFalsy();
+              done();
+            })
+            .catch((e) => done(e));
+        }
+      });
   });
 
-  it(`should clear completedAt when todo is not completed`, (done) => {
-
+  it(`should return 400 if object id is invalid`, (done) => {
+    request(app)
+      .delete(`/todos/123`)
+      .expect(400)
+      .end(done);
   });
 });
