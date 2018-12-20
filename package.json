@@ -4,25 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "test:lint": "eslint .",
-    "test": "SET \"NODE_ENV=test\" && mocha tests/*.test.js",
+    "test": "SET \"NODE_ENV=test\" && mocha tests/*.test.js  --timeout=5000",
     "test-watch": "nodemon --exec \"npm test\""
   },
   "engines": {
-    "node":"10.14.1"
+    "node": "10.14.1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "2.4.3",
     "body-parser": "1.18.3",
     "dotenv": "6.2.0",
     "express": "4.16.4",
     "jest": "23.6.0",
+    "jsonwebtoken": "8.4.0",
     "lodash": "4.17.11",
     "mocha": "5.2.0",
     "mongodb": "3.1.10",
     "mongoose": "5.3.15",
-    "supertest": "3.3.0"
+    "supertest": "3.3.0",
+    "validator": "10.9.0"
   }
 }

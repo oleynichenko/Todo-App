@@ -1,6 +1,6 @@
 const mongoose = require(`./index`);
 
-const Todo = mongoose.model(`todos`, {
+const Todo = mongoose.model(`Todos`, {
   text: {
     type: String,
     required: true,
@@ -14,6 +14,10 @@ const Todo = mongoose.model(`todos`, {
   completedAt: {
     type: Number,
     default: null
+  },
+  _creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
   }
 });
 
