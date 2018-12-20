@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "nodemoon": "nodemon server.js",
     "test:lint": "eslint .",
     "test": "SET \"NODE_ENV=test\" && mocha tests/*.test.js  --timeout=5000",
     "test-watch": "nodemon --exec \"npm test\""
