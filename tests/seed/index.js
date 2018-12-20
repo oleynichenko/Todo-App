@@ -1,7 +1,7 @@
 const mongoose = require(`mongoose`);
 const jwt = require(`jsonwebtoken`);
 
-const secret = require(`../../config`);
+const {secret} = require(`../../config`);
 const Todo = require(`../../db/todos-model`);
 const User = require(`../../db/users-model`);
 
